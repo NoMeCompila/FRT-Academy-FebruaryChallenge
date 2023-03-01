@@ -36,11 +36,13 @@ class BasePage:
     def get_text(self, by_locator: tuple) -> str:
         return self.wait.until(EC.visibility_of_element_located(by_locator)).text
 
+    # prints text for a list of locators
     def print_all_texts(self, by_locator: tuple) -> None:
         all_descriptions = self.wait.until(EC.presence_of_all_elements_located(by_locator))
         for desc in all_descriptions:
             print(desc.text)
 
+    # returns a list with a texts from web locators
     def get_all_texts(self, by_locator: tuple) -> list:
         all_descriptions = self.wait.until(EC.presence_of_all_elements_located(by_locator))
         desc_list = []

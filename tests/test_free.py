@@ -11,9 +11,16 @@ class TestFree:
     data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', r'..\data\search_data.json'))
     data = load_data(data_path)
 
-    @pytest.mark.free_test
+    @pytest.mark.free
     @pytest.mark.parametrize("element", data["search_input"])
     def test_free_range_page(self, init_driver: WebDriver, element: str) -> None:
+        """
+        First, enter the free range tester page and verify that the title is correct, then type selenium in the search
+        engine and hit enter to finally be able to verify that the description of the blog posts are correct.
+        :param init_driver: WebDriver
+        :param element: str
+        :return: None
+        """
         free_home = FreeRangeTesterHome(init_driver)
         free_home.go_to_page("https://www.freerangetesters.com/")
         assert "Free" in free_home.get_text(free_home.title)
@@ -23,4 +30,3 @@ class TestFree:
         free_results = FreeRangeTesterResults(init_driver)
         assert "Resultados" in free_results.get_text(free_results.title)
         assert all("Selenium" in desc for desc in free_results.get_all_texts(free_results.descriptions))
-
